@@ -39,7 +39,7 @@ app.get('/', function (req, res) {
 const mensagens = ['Essa é uma mensagem', 'Essa é outra mensagem'];
 
 // Read All
-app.get('/mensagem/:id', function (req, res) {
+app.get('/mensagem', function (req, res) {
     res.send(mensagens);
 });
 
@@ -52,6 +52,33 @@ app.post('/mensagem', function (req, res) {
     res.send(`A mensagem '${texto}' foi criada com sucesso.`);
 });
 
+// Read Single
+app.get('/mensagem/:id', function (req, res) {
+    const id = req.params.id;
+
+    const mensagem = mensagens[id - 1];
+
+    res.send(mensagem);
+});
+
+// Update
+app.put('/mensagem/:id', function (req, res) {
+    const id = req.params.id;
+    const texto = req.body.texto;
+
+    mensagens[id - 1] = texto;
+
+    res.send(`A mensagem de ID '${id}' foi editada com sucesso para o texto '${texto}'.`);
+});
+
+// Delete
+app.delete('/mensagem/:id', function (req, res) {
+    const id = req.params.id;
+
+    delete mensagens[id - 1];
+
+    res.send(`A mensagem de ID '${id}' foi removida com sucesso.`);
+});
 
 app.listen(port, function () {
     console.log('App rodando em http://localhost:' + port);
