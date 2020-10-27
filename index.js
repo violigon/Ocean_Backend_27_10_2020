@@ -39,23 +39,19 @@ app.get('/', function (req, res) {
 const mensagens = ['Essa é uma mensagem', 'Essa é outra mensagem'];
 
 // Read All
-app.get('/mensagem', function (req, res) {
+app.get('/mensagem/:id', function (req, res) {
     res.send(mensagens);
 });
 
 // Create
 app.post('/mensagem', function (req, res) {
-    // Paramos aqui:
-    // res.send(req.body);
-
-    // Obtenho o texto a partir do body da requisição
     const texto = req.body.texto;
 
-    // Adiciono o texto recebido na lista de mensagens.
     mensagens.push(texto);
 
-    res.send('Mensagem adicionada com sucesso.');
+    res.send(`A mensagem '${texto}' foi criada com sucesso.`);
 });
+
 
 app.listen(port, function () {
     console.log('App rodando em http://localhost:' + port);
